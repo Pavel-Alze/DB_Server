@@ -23,6 +23,14 @@ public class Review {
     @JoinColumn(name = "place_id")
     private Place place;
 
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
     public void setUser(User user){
         this.user=user;
     }

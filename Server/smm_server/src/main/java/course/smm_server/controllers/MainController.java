@@ -1,20 +1,10 @@
 package course.smm_server.controllers;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
-import course.smm_server.models.Review;
-import course.smm_server.models.User;
-import course.smm_server.service.UserDAO;
-import org.json.JSONObject;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import course.smm_server.models.*;
+import course.smm_server.service.*;
 import org.springframework.web.bind.annotation.*;
 
-import javax.ws.rs.Produces;
-import javax.ws.rs.core.MediaType;
 import java.io.IOException;
 import java.io.StringWriter;
 import java.util.List;
@@ -22,9 +12,17 @@ import java.util.List;
 @RestController
 public class MainController {
     private final UserDAO userDAO;
-
-    public MainController(UserDAO userDAO) {
+    private final PlaceDAO placeDAO;
+    private final ShopDAO shopDAO;
+    private final ReviewDAO reviewDAO;
+    private final LoginDAO loginDAO;
+    public MainController(UserDAO userDAO, PlaceDAO placeDAO, ShopDAO shopDAO,
+                          ReviewDAO reviewDAO, LoginDAO loginDAO) {
         this.userDAO = userDAO;
+        this.placeDAO = placeDAO;
+        this.shopDAO = shopDAO;
+        this.reviewDAO = reviewDAO;
+        this.loginDAO = loginDAO;
     }
 
     @GetMapping(value = "/users")
@@ -68,5 +66,43 @@ public class MainController {
         userDAO.deleteByPk(id);
     }
 
+    @GetMapping(value = "/places/{id}")
+    public Place readPlacesById(@PathVariable Integer id){
+        final Place place = placeDAO.getByPk(id);
+        return place;
+    }
+
+    @GetMapping(value = "/places")
+    public List<Place> readPlaces(){
+        final List<Place> placeList = placeDAO.getAll();
+        return placeList;
+    }
+
+    @GetMapping(value = "/shops")
+    public List<Shop> readShops(){
+        return shopDAO.getAll();
+    }
+    @GetMapping(value = "/shops/{id}")
+    public Shop readShopsById(@PathVariable Integer id){
+        return shopDAO.getByPk(id);
+    }
+
+    @GetMapping(value = "/reviews")
+    public List<Review> readReviews(){
+        return reviewDAO.getAll();
+    }
+    @GetMapping(value = "/reviews/{id}")
+    public Review readReviewsById(@PathVariable Integer id){
+        return reviewDAO.getByPk(id);
+    }
+
+    @DeleteMapping(value = "/reviews/{id}")
+    public void deleteReviewsById(@PathVariable Integer id){
+        reviewDAO.deleteByPk(id);
+    }
+    @PostMapping(value = "/login")
+    public void createLogin(@RequestBody Login login){
+        loginDAO.create(login);
+    }
 
 }

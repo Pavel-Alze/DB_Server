@@ -4,10 +4,17 @@ import course.smm_server.models.Place;
 import course.smm_server.models.Review;
 import course.smm_server.models.User;
 import course.smm_server.repository.ReviewRepository;
+import jakarta.persistence.*;
+import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
 
 import java.util.List;
 
+@Service
+@Transactional
 public class ReviewDAO implements DAO2<Review,Integer, Place, User>{
 
     @Autowired
@@ -18,9 +25,11 @@ public class ReviewDAO implements DAO2<Review,Integer, Place, User>{
         reviewRepository.save(review);
     }
 
+    @PersistenceContext
+    private EntityManager em;
     @Override
     public List<Review> getAll() {
-        return reviewRepository.findAll();
+        return em.createQuery("from Review", Review.class).getResultList();
     }
 
     @Override
@@ -39,9 +48,11 @@ public class ReviewDAO implements DAO2<Review,Integer, Place, User>{
     }
 
     @Override
-    public void update(Review review) {
+    public void update(Review review, Integer integer) {
+        review.setId(integer);
         reviewRepository.save(review);
     }
+
 
     @Override
     public void deleteByPk(Integer integer) {

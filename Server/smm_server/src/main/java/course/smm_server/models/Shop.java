@@ -8,7 +8,7 @@ import jakarta.persistence.*;
 public class Shop {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    public Integer id;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "place_id")
@@ -18,4 +18,11 @@ public class Shop {
         this.place=place;
     }
 
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
 }

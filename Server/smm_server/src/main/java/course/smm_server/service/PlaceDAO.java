@@ -5,9 +5,11 @@ import course.smm_server.models.Review;
 import course.smm_server.models.Shop;
 import course.smm_server.repository.PlaceRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Service
 public class PlaceDAO implements DAO2<Place,Integer, Review, Shop>{
 
     @Autowired
@@ -41,7 +43,8 @@ public class PlaceDAO implements DAO2<Place,Integer, Review, Shop>{
     }
 
     @Override
-    public void update(Place place) {
+    public void update(Place place, Integer integer) {
+        place.setId(integer);
         placeRepository.save(place);
     }
 

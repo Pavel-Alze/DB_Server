@@ -37,7 +37,6 @@ public class UserDAO implements DAO<User,Integer,Review>{
     @Override
     public void update(User user, Integer integer){
         user.setId(integer);
-        System.out.println(user.id);
         userRepository.save(user);
     }
 

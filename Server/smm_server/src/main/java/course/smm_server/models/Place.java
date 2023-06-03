@@ -1,22 +1,34 @@
 package course.smm_server.models;
 
 
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 
 import java.util.List;
 
 @Entity
 @Table(name = "places")
+@JsonAutoDetect
+@JsonIgnoreProperties({"shops","reviews"})
 public class Place {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
-
+    public Integer id;
     @OneToMany(mappedBy = "place", cascade = CascadeType.ALL, orphanRemoval = true)
-    public List<Review> reviewList;
-
+    private List<Review> reviewList;
     @OneToMany(mappedBy = "place", cascade = CascadeType.ALL, orphanRemoval = true)
-    public List<Shop> shopList;
+    @JsonIgnore
+    private List<Shop> shopList;
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
 
     public void addReviews(Review review){
         review.setPlace(this);

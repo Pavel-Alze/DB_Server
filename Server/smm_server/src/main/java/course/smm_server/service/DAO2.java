@@ -8,7 +8,7 @@ public interface DAO2 <T,I,K,J>{
     T getByPk(I i);
     List<K> getByFk1(I i);
     List<J> getByFk2(I i);
-    void update(T t);
+    void update(T t,I i);
     void deleteByPk(I i);
     void deleteAll();
 }

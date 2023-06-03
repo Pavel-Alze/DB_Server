@@ -4,10 +4,12 @@ import course.smm_server.models.Login;
 import course.smm_server.models.User;
 import course.smm_server.repository.LoginRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@Service
 public class LoginDAO implements DAO<Login, Integer, User> {
 
     @Autowired
@@ -37,11 +39,13 @@ public class LoginDAO implements DAO<Login, Integer, User> {
 
     @Override
     public void update(Login login, Integer integer) {
+        login.setId(integer);
         loginRepository.save(login);
     }
 
     @Override
     public void deleteByPk(Integer integer) {
+
         loginRepository.deleteById(integer);
     }
 

@@ -4,8 +4,10 @@ import course.smm_server.models.Place;
 import course.smm_server.models.Shop;
 import course.smm_server.repository.ShopRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
+@Service
 
 public class ShopDAO implements DAO<Shop,Integer, Place>{
 
@@ -34,6 +36,7 @@ public class ShopDAO implements DAO<Shop,Integer, Place>{
 
     @Override
     public void update(Shop shop, Integer integer) {
+        shop.setId(integer);
         shopRepository.save(shop);
     }
 

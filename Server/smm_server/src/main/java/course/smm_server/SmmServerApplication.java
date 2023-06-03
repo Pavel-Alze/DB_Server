@@ -10,7 +10,9 @@ public class SmmServerApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(SmmServerApplication.class, args);
-		System.out.println("TEST");
+		Integer integer = 1;
+		System.out.println("TEST_SERVER"+integer);
+
 	}
 
 }
